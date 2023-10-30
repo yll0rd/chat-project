@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="center">
+          <h1>Sign up</h1>
+          <form action="{% url 'chatapp:signup' %}" method="POST">
+              {% csrf_token %}
+              <div class="txt_field">
+                  <input type="text" name="F_name" required>
+                  <span></span>
+                  <label>First Name *</label>
+              </div>
+              <div class="txt_field">
+                  <input type="text" name="S_name" required>
+                  <span></span>
+                  <label>Second Name *</label>
+              </div>
+              <div class="txt_field">
+                  <input type="text" name="username" required>
+                  <span></span>
+                  <label>Username *</label>
+              </div>
+              <div class="txt_field">
+                  <input type="email" name="email" required>
+                  <span></span>
+                  <label>Email *</label>
+              </div>
+              <div class="txt_field">
+                  <input type="password" name="password" required>
+                  <span></span>
+                  <label>Password *</label>
+              </div>
+              <input name="submit" type="Submit" value="Sign up">
+               <div class="signup_link">
+                  Already a Member ? <a href="{% url 'chatapp:login' %}">LOGIN</a>
+              </div>
+          </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -21,6 +21,7 @@
         <script src="https://use.typekit.net/hoy3lrg.js"></script>
         <script>try{Typekit.load({ async: true });}catch(e){}</script>
         <link rel="stylesheet" href="{% static 'main.css' %}">
+<!--        <link rel="stylesheet" href="../../static/main.css">-->
         <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
     </head>
     <body>
@@ -43,24 +44,25 @@
                 <div id="profile">
                     <div class="wrap">
                         <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
-                        <p>Mike Ross</p>
-                        <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
-                        <div id="status-options">
-                            <ul>
-                                <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
-                                <li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
-                                <li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
-                                <li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
-                            </ul>
-                        </div>
-                        <div id="expanded">
-                            <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
-                            <input name="twitter" type="text" value="mikeross" />
-                            <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
-                            <input name="twitter" type="text" value="ross81" />
-                            <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
-                            <input name="twitter" type="text" value="mike.ross" />
-                        </div>
+                        <p>{{ name }}</p>
+<!--                        <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>-->
+<!--                        <div id="status-options">-->
+<!--                            <ul>-->
+<!--                                <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>-->
+<!--                                <li id="status-away"><span class="status-circle"></span> <p>Away</p></li>-->
+<!--                                <li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>-->
+<!--                                <li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                        <div id="expanded">-->
+<!--                            <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>-->
+<!--&lt;!&ndash;                            <input name="twitter" type="text" value="mikeross" />&ndash;&gt;-->
+<!--                            <span>mike ross</span>-->
+<!--                            <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>-->
+<!--                            <input name="twitter" type="text" value="ross81" />-->
+<!--                            <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>-->
+<!--                            <input name="twitter" type="text" value="mike.ross" />-->
+<!--                        </div>-->
                     </div>
                 </div>
                 <div id="search">
@@ -180,11 +182,11 @@
                 <div class="contact-profile">
                     <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
                     <p>Harvey Specter</p>
-                    <div class="social-media">
-                        <i class="fa fa-facebook" aria-hidden="true"></i>
-                        <i class="fa fa-twitter" aria-hidden="true"></i>
-                        <i class="fa fa-instagram" aria-hidden="true"></i>
-                    </div>
+<!--                    <div class="social-media">-->
+<!--                        <i class="fa fa-facebook" aria-hidden="true"></i>-->
+<!--                        <i class="fa fa-twitter" aria-hidden="true"></i>-->
+<!--                        <i class="fa fa-instagram" aria-hidden="true"></i>-->
+<!--                    </div>-->
                 </div>
                 <div class="messages">
                     <ul>
