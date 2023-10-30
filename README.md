@@ -1,5 +1,5 @@
 # Chat Application project
-This is a chat application project built with Django, allowing users to communicate with each other in real-time.
+This is a chat application project allowing users to communicate with each other in real-time, built with Html, Css and JavaScript for the frontend and Django for the backend.
 
 ## Features
 * User authentication and authorization 
