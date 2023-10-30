@@ -1,10 +1,10 @@
 # Chat Application project
-This is a chat application project allowing users to communicate with each other in real-time, built with Html, Css and JavaScript for the frontend and Django for the backend.
+This is a chat application project allowing users to communicate with each other in real-time, built with Html, Css and JavaScript for the frontend, Django for the backend and WebSockets.
 
 ## Features
-* User authentication and authorization 
-* Real-time messaging between users in a chat room  
-* User-friendly interface  
+* User authentication and authorization. 
+* Real-time messaging between users in a chat room.  
+* User-friendly interface.  
 
 ## Installation
 1. Clone the repository  
