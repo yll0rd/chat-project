@@ -1,0 +1,10 @@
+# Virtual environment
+venv
+
+# Environment variables location
+.env
+
+# Not-to-push, somehow useless, folders
+.idea
+*__pycache__*
+*migrations*
