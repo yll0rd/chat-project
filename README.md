@@ -33,7 +33,7 @@ This is a chat application project allowing users to communicate with each other
 ## Usage
 1. Register for an account or log in if you already have one.
 2. Start messaging with other users in real-time.
-3.  Have fun.
+3.  Have fun :)
 
 ## Contributing
 Contributions are always welcome! If you have any bug reports, feature requests, or pull requests, please feel free to submit them.
