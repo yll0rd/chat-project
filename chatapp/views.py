@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model, authenticate, login
+from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from rest_framework import status
@@ -13,7 +13,7 @@ User = get_user_model()
 def home(request):
     print(request.user)
     context = {'name': request.user.name}
-    return render(request, 'chatapp/index.html', context=context)
+    return render(request, 'chatapp/index.html', context=context, status=status.HTTP_200_OK)
 
 
 class RegisterView(APIView):
@@ -57,3 +57,8 @@ class LoginView(APIView):
         else:
             login(request, user)
             return redirect('chatapp:home')
+
+
+def logOutView(request):
+    logout(request)
+    return render(request, 'chatapp/login.html', status=status.HTTP_200_OK)
