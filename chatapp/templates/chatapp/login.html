@@ -24,6 +24,7 @@
                   <label>Password</label>
               </div>
               <div class="pass">Forget Password?</div>
+              {% if error %} <p style="color: red; margin-left: 5px">{{ error }}</p> {% endif %}
               <input name="submit" type="Submit" value="Login">
                <div class="signup_link">
                   Not a Member ? <a href="{% url 'chatapp:signup' %}">SignUp</a>

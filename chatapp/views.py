@@ -1,12 +1,9 @@
 from django.contrib.auth import get_user_model, authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-from chatapp.models import ChatUsers
 
 User = get_user_model()
 
@@ -51,12 +48,12 @@ class LoginView(APIView):
 
     def post(self, request):
         # email = request.POST["email"]
-        print(request.POST)
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(username=username, password=password)
         if not user:
-            return JsonResponse({'error': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+            error = {'error': 'User does not exist OR Wrong credentials'}
+            return render(request, 'chatapp/login.html', context=error, status=status.HTTP_404_NOT_FOUND)
         else:
             login(request, user)
             return redirect('chatapp:home')
