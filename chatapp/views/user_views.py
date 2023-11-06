@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model, authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from rest_framework import status
 from rest_framework.response import Response
@@ -9,12 +8,6 @@ User = get_user_model()
 
 
 # Create your views here.
-@login_required(login_url='/signin')
-def home(request):
-    print(request.user)
-    context = {'name': request.user.name}
-    return render(request, 'chatapp/index.html', context=context, status=status.HTTP_200_OK)
-
 
 class RegisterView(APIView):
     def get(self, request):
