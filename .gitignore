@@ -1,7 +1,7 @@
-# Virtual environment
+# Virtual environment folder
 venv
 
-# Environment variables location
+# Environment variables file
 .env
 
 # Not-to-push, somehow useless, folders
