@@ -20,7 +20,7 @@ class RegisterView(APIView):
     def get(self, request):
         return render(request, 'chatapp/signup.html')
 
-    def post(self, request, format=None):
+    def post(self, request):
         print(request.POST)
         first_name = request.POST['F_name']
         second_name = request.POST['S_name']

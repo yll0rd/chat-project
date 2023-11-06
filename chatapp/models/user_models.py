@@ -20,7 +20,7 @@ class ChatUsers(AbstractBaseUser):
     username = models.CharField(max_length=150, unique=True)
     name = models.CharField(max_length=150,default=username)
     password = models.CharField(max_length=128)
-    email = models.CharField(max_length=150)
+    email = models.EmailField(max_length=150)
     objects = ChatUsersManager()
 
     USERNAME_FIELD = 'username'
