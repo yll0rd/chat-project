@@ -8,7 +8,7 @@ from django.db import models
 class ChatUsersManager(BaseUserManager):
     def create_user(self, username, password=None, **extra_fields):
         try:
-            user = ChatUsers.objects.get(username=username)
+            user = ChatUsers.objects.get(username=username, **extra_fields)
         except ChatUsers.DoesNotExist:
             user = self.model(username=username, **extra_fields)
             user.set_password(password)

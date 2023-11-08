@@ -27,7 +27,8 @@ class RegisterView(APIView):
         try:
             user = User.objects.create_user(username=username, name=name, password=password, email=email)
         except Exception as e:
-            return Response({'error': str(e)})
+            error = {'error': 'Username already used. Please change.'}
+            return render(request, 'chatapp/signup.html', context=error, status=status.HTTP_404_NOT_FOUND)
         if user:
             print(user.username)
             return redirect('chatapp:login')
@@ -45,7 +46,7 @@ class LoginView(APIView):
         password = request.POST["password"]
         user = authenticate(username=username, password=password)
         if not user:
-            error = {'error': 'User does not exist OR Wrong credentials'}
+            error = {'error': 'Invalid username and password combination.'}
             return render(request, 'chatapp/login.html', context=error, status=status.HTTP_404_NOT_FOUND)
         else:
             login(request, user)
