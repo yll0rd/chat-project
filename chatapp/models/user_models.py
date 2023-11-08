@@ -15,10 +15,15 @@ class ChatUsersManager(BaseUserManager):
             user.save()
         return user
 
+    def get_query(self, request):
+        return super().get_queryset().exclude(
+            id=request.user.id
+        )
+
 
 class ChatUsers(AbstractBaseUser):
     username = models.CharField(max_length=150, unique=True)
-    name = models.CharField(max_length=150,default=username)
+    name = models.CharField(max_length=150, default=username)
     password = models.CharField(max_length=128)
     email = models.EmailField(max_length=150)
     objects = ChatUsersManager()
