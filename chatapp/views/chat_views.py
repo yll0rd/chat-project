@@ -10,7 +10,7 @@ User = get_user_model()
 
 @login_required(login_url='/signin')
 def home(request):
-    print(request.user)
-    contacts = User.objects.get_query(request)
+    user_id = request.user.id
+    contacts = User.objects.get_query(user_id)
     context = {'name': request.user.name, 'contacts': contacts}
     return render(request, 'chatapp/index.html', context=context, status=status.HTTP_200_OK)

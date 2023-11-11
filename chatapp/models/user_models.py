@@ -15,9 +15,9 @@ class ChatUsersManager(BaseUserManager):
             user.save()
         return user
 
-    def get_query(self, request):
+    def get_query(self, id):
         return super().get_queryset().exclude(
-            id=request.user.id
+            id=id
         )
 
 
