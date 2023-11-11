@@ -6,10 +6,11 @@ User = get_user_model()
 
 
 class Conversation(models.Model):
-    first_user = models.ForeignKey(User, models.CASCADE, null=True, blank=True,
-                                   related_name='room_first_person')
-    second_user = models.ForeignKey(User, models.CASCADE, null=True, blank=True,
-                                    related_name='room_second_person')
+    room_name = models.CharField(max_length=200, unique=True)
+    users = models.ManyToManyField(User, limit_choices_to=2)
+
+    def __str__(self):
+        return self.room_name
 
 
 class Messages(models.Model):
