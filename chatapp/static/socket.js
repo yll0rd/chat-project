@@ -1,14 +1,15 @@
-const chatSocket = new WebSocket("ws://" + window.location.host + '/')
-chatSocket.onopen = function (e) {
-    console.log(window.location.host)
-    console.log("The connection was setup successfully !");
-}
+export const socketty = (roomName) => {
+    const chatSocket = new WebSocket("ws://" + window.location.host + `/${roomName.toString()}/`)
+    chatSocket.onopen = function (e) {
+        console.log(window.location.host)
+        console.log("The connection was setup successfully !");
+    }
 
-chatSocket.onclose = function (e) {
-    console.log("Error: ", e)
-    console.log("Chat socket closed unexpectedly")
+    chatSocket.onclose = function (e) {
+        console.log("Error: ", e)
+        console.log("Chat socket closed unexpectedly")
+    }
 }
-
 
 const fetchMessages = function () {
     const user_one_name = $('div#profile.wrap p').text()

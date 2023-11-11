@@ -1,3 +1,6 @@
+import {socketty} from "./socket.js";
+
+
 $(document).ready(function (){
 	$(".messages").animate({scrollTop: $(document).height()}, "fast");
 	function newMessage() {
@@ -32,7 +35,9 @@ $(document).ready(function (){
 			$(this).addClass('active')
 			addingDivContent()
 			const name = $('.contact.active p.name').text()
-			$('.contact-profile p').text(name)
+			$('.contact-profile p').text(name);
+			const roomId = $(this).attr('id')
+			socketty(roomId)
 		}
 	});
 	//# sourceURL=main.js
