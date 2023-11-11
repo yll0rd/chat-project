@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -15,5 +17,5 @@ def create_chatroom(sender, instance, created, **kwargs):
         if other_users is None:
             return
         for user in other_users:
-            convo = Conversation.objects.create(room_name=f"{str(instance)}_{str(user)}")
+            convo = Conversation.objects.create(room_name=f"Room_{str(uuid.uuid4())[:8]}")
             convo.users.add(instance, user)
