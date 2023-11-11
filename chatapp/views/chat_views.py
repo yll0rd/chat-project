@@ -18,15 +18,13 @@ User = get_user_model()
 def home(request):
     user_id = request.user.id
     contacts = User.objects.get_query(user_id)
-    room_ids = {}
+    contact_list = list()
     for contact in contacts:
-        room_ids[contact.username] = get_chat_room(request.user, contact).room_name
-    print(room_ids)
-    context = {'name': request.user.name, 'contacts': contacts, 'room_ids': room_ids}
-    # msg = {}
-    # for convo in Conversation.objects.all():
-    #     for message in Messages.objects.filter(conversation=convo):
-    #         me
+        contact_list.append({
+            "contact_name": contact.name,
+            "room_id": get_chat_room(request.user, contact).room_name
+        })
+    context = {'name': request.user.name, 'contacts': contact_list}
     return render(request, 'chatapp/index.html', context=context, status=status.HTTP_200_OK)
 
 

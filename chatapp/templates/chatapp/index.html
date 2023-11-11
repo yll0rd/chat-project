@@ -72,12 +72,12 @@
                 <div id="contacts">
                     <ul>
                     {% for contact in contacts %}
-                        <li class="contact">
+                        <li class="contact"  id="{{ contact.room_id }}">
                             <div class="wrap">
                                 <span class="contact-status online"></span>
                                 <img src="http://emilcarlsson.se/assets/donnapaulsen.png" alt="" />
                                 <div class="meta">
-                                    <p class="name">{{ contact.name }}</p>
+                                    <p class="name">{{ contact.contact_name }}</p>
                                     <p class="preview">lastmessage..</p>
                                 </div>
                             </div>
