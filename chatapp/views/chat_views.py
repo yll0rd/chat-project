@@ -30,7 +30,6 @@ def home(request):
             contact_list[-1]["last_message"] = message.content
         else:
              contact_list[-1]["last_message"] = 'empty chat'
-    print(contact_list)
     context = {'contacts': contact_list}
     return render(request, 'chatapp/index.html', context=context, status=status.HTTP_200_OK)
 
