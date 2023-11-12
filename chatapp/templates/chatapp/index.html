@@ -170,7 +170,8 @@
             }
 
             function scrollToBottom() {
-                $('div.messages').scrollTop($('div.messages')[0].scrollHeight);
+                let messageContainer = $('div.messages')
+                messageContainer.scrollTop(messageContainer[0].scrollHeight);
             }
 
 
