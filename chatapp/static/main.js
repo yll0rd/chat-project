@@ -1,6 +1,3 @@
-
-
-
 $(document).ready(function () {
 	$(".messages").animate({scrollTop: $(document).height()}, "fast");
 
@@ -14,8 +11,4 @@ $(document).ready(function () {
 			$('div.content').empty()
 		}
 	});
-
-	//# sourceURL=main.js
-
-
 })

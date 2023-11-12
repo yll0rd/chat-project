@@ -20,16 +20,16 @@ def home(request):
     contacts = User.objects.get_query(user_id)
     contact_list = list()
     for contact in contacts:
-        message = Messages.objects.filter(conversation=get_chat_room(request.user, contact)).last()
-        
+        last_message = Messages.objects.filter(conversation=get_chat_room(request.user, contact)).last()
+
         contact_list.append({
             "contact_name": contact.name,
             "room_id": get_chat_room(request.user, contact).room_name,
         })
-        if message:
-            contact_list[-1]["last_message"] = message.content
+        if last_message:
+            contact_list[-1]["last_message"] = last_message.content
         else:
-             contact_list[-1]["last_message"] = 'empty chat'
+            contact_list[-1]["last_message"] = 'empty chat'
     context = {'contacts': contact_list}
     return render(request, 'chatapp/index.html', context=context, status=status.HTTP_200_OK)
 
