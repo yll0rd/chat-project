@@ -575,15 +575,15 @@ body {
     margin: 6px 8px 0 0;
   }
   #frame .content .messages ul li.sent p {
-    background: #435f7a;
-    color: #f5f5f5;
+    background: #f5f5f5;
   }
   #frame .content .messages ul li.replies img {
     float: right;
     margin: 6px 0 0 8px;
   }
   #frame .content .messages ul li.replies p {
-    background: #f5f5f5;
+    background: #435f7a;
+    color: #f5f5f5;
     float: right;
   }
   #frame .content .messages ul li img {

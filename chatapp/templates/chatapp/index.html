@@ -44,7 +44,7 @@
                 <div id="profile">
                     <div class="wrap">
                         <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
-                        <p>{{ name }}</p>
+                        <p>{{ request.user.username }}</p>
 <!--                        <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>-->
 <!--                        <div id="status-options">-->
 <!--                            <ul>-->
@@ -78,7 +78,7 @@
                                 <img src="http://emilcarlsson.se/assets/donnapaulsen.png" alt="" />
                                 <div class="meta">
                                     <p class="name">{{ contact.contact_name }}</p>
-                                    <p class="preview">lastmessage..</p>
+                                    <p class="preview">{{ contact.last_message }}</p>
                                 </div>
                             </div>
                         </li>
@@ -96,6 +96,94 @@
         <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
         <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
         <script type="module" src="{% static 'main.js' %}"></script>
-        <script type="module" src="{% static 'socket.js' %}"></script>
+        <script>
+            const socketty = (roomName) => {
+                const chatSocket = new WebSocket("ws://" + window.location.host + `/${roomName.toString()}/`)
+                chatSocket.onopen = function (e) {
+                    console.log(window.location.host)
+                    console.log("The connection was setup successfully !");
+                }
+
+                chatSocket.onclose = function (e) {
+                    console.log("Error: ", e)
+                    console.log("Chat socket closed unexpectedly")
+                }
+
+                $('.submit').click(function () {
+                    const messageInput = $(".message-input input").val();
+                    const roomId = $(".contact.active").attr('id');
+                    const username = "{{ request.user.username }}"
+                    chatSocket.send(JSON.stringify({
+                        "message": messageInput,
+                        "room_id": roomId,
+                        "sender_username": username
+                    }));
+                });
+
+                chatSocket.onmessage = function (e) {
+                    const data = JSON.parse(e.data);
+                    if ($.trim(data.message) == '') {
+                        return false;
+                    }
+                    const isSender = data.sender_username !== "{{ request.user.username }}";
+                    const messageClass = isSender ? 'sent' : 'replies';
+                    const messageLi = `<li class="${messageClass}"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>${data.message}</p></li>`;
+                    $('.messages ul').append(messageLi)
+                    $('.message-input input').val(null);
+                    const previewText = isSender ? '' : 'You: ';
+                    $('.contact.active .preview').html(`<span>${previewText}${data.message}</span>`);
+                    $(".messages").animate({scrollTop: $(document).height()}, "fast");
+                }
+            };
+
+            $('.contact').click(function () {
+                const hasActiveClass = $(this).hasClass('active')
+                if (!hasActiveClass) {
+                    $('.contact').removeClass('active')
+                    $(this).addClass('active')
+                    addingDivContent()
+                    const name = $('.contact.active p.name').text()
+                    $('.contact-profile p').text(name);
+                    const roomId = $(this).attr('id')
+                    socketty(roomId)
+                    fetchMessages()
+                }
+            });
+
+            const fetchMessages = function () {
+                const roomId = $(".contact.active").attr('id')
+                $.ajax({
+                    type: 'GET',
+                    url: `/messages/${roomId}`,
+                    success: (result) => {
+                        $.each(result.data, (index, msg) => {
+                            const isSender = msg.sender !== "{{ request.user.username }}";
+                            const messageClass = isSender ? 'sent' : 'replies';
+                            const messageLi = `<li class="${messageClass}"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>${msg.content}</p></li>`;
+                            $('.messages ul').append(messageLi)
+                        })
+                    }
+                })
+            }
+
+
+            const addingDivContent = () => {
+                $('div.content').html(`<div class="contact-profile">
+                            <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="">
+                            <p></p>
+                        </div>
+                        <div class="messages">
+                            <ul>
+                            </ul>
+                        </div>
+                        <div class="message-input">
+                            <div class="wrap">
+                            <input type="text" placeholder="Write your message...">
+                            <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+                            <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                            </div>
+                        </div>`)
+	        }
+        </script>
     </body>
 </html>

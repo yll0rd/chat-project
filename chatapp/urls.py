@@ -9,5 +9,5 @@ urlpatterns = [
     path('signup/', RegisterView.as_view(), name='signup'),
     path('signout/', logOutView, name='sign-out'),
 
-    path('messages/<str:user_one_name>/<str:user_two_name>', FetchMessages.as_view())
+    path('messages/<str:room_id>', FetchMessages.as_view())
 ]
