@@ -39,7 +39,7 @@ def home(request):
         })
         if last_message:
             contact_list[-1]["last_message"] = last_message.content
-            contact_list[-1]["timestamp"] = contact[1]
+            contact_list[-1]["timestamp"] = contact[1].time()
         else:
             contact_list[-1]["last_message"] = 'empty chat'
             contact_list[-1]["timestamp"] = ''
