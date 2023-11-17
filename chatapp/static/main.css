@@ -528,6 +528,10 @@ body {
   #frame .content .contact-profile p {
     float: left;
   }
+
+  #timestamp {
+    float: right;
+  }
   /*#frame .content .contact-profile .social-media {*/
   /*  float: right;*/
   /*}*/
