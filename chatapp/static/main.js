@@ -11,4 +11,5 @@ $(document).ready(function () {
 			$('div.content').empty()
 		}
 	});
+	console.clear();
 })
