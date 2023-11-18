@@ -78,7 +78,7 @@
                                 <img src="http://emilcarlsson.se/assets/donnapaulsen.png" alt="" />
                                 <div class="meta">
                                     <p class="name">{{ contact.contact_name }}</p>
-                                    <p class="preview">{{ contact.last_message }}<span id="timestamp" style="margin-right: 45px;">{{ contact.timestamp }}</span></p>
+                                    <p class="preview"><span>{{ contact.last_message }}<span id="timestamp" style="margin-right: 45px;">{{ contact.timestamp }}</span></span></p>
                                 </div>
                             </div>
                         </li>
@@ -128,11 +128,12 @@
                     const isSender = data.sender_username !== "{{ request.user.username }}";
                     const messageClass = isSender ? 'sent' : 'replies';
                     const messageLi = `<li class="${messageClass}"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>${data.message}</p></li>`;
-                    if ($(".contact.active").attr("id") === data.room_name)
+                    if ($(".contact.active").attr("id") === data.room_name) {
                         $('.messages ul').append(messageLi)
+                    }
                     $('.message-input input').val(null);
                     const previewText = isSender ? '' : 'You: ';
-                    $(`#${data.room_name} .preview`).html(`<span>${previewText}${data.message}</span>`);
+                    $(`#${data.room_name} .preview`).html(`<span>${previewText}${data.message}<span id="timestamp" style="margin-right: 45px;">${data.timestamp}</span></span>`);
                     $(".messages").animate({scrollTop: $(document).height()}, "fast");
                     scrollToBottom()
                 }
