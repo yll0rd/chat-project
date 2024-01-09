@@ -1,12 +1,13 @@
 {% load static %}
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
 <!------ Include the above in your HEAD tag ---------->
 
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>-->
+<script src="{% static 'jquery-3.7.1.min.js' %}"></script>
 <!------ Include the above in your HEAD tag ---------->
 
 
@@ -149,13 +150,12 @@
                     $('.contact-profile p').text(name);
                     const roomId = $(this).attr('id')
                     socketty(roomId)
-                    fetchMessages()
+                    fetchMessages(roomId)
                     scrollToBottom()
                 }
             });
 
-            const fetchMessages = function () {
-                const roomId = $(".contact.active").attr('id')
+            const fetchMessages = function (roomId) {
                 $.ajax({
                     type: 'GET',
                     url: `/messages/${roomId}`,

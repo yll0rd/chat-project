@@ -1,26 +1,33 @@
+import jwt
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework import status
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from chatapp.models import Messages, Conversation
-from chatapp.utils import get_chat_room, customised_sort
+from chatapp.utils import get_chat_room, customised_sort, login_required, get_user_from_request
 
 User = get_user_model()
 
 
 # Create your views here.
 
-@login_required(login_url='/signin')
-def home(request):
+# @login_required(login_url='/signin')
+# @login_required
+@api_view(['GET'])
+def contactsView(request):
+
     # Get the user ID
-    user_id = request.user.id
+    request, _ = get_user_from_request(request)
 
     # Get the contacts for the user
-    contacts = User.objects.get_query(user_id)
+    contacts = User.objects.get_query(request.user.id)
     users_with_timestamps = []
     for user in contacts:
         user_messages = Messages.objects.filter(conversation=get_chat_room(request.user, user))
@@ -44,11 +51,13 @@ def home(request):
             contact_list[-1]["last_message"] = 'empty chat'
             contact_list[-1]["timestamp"] = ''
     context = {'contacts': contact_list}
-    return render(request, 'chatapp/index.html', context=context, status=status.HTTP_200_OK)
+    # return render(request, 'chatapp/index.html', context=context, status=status.HTTP_200_OK)
+    return Response(context)
 
 
 class FetchMessages(APIView):
     permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication]
 
     def get(self, request, room_id: str):
         # Get the conversation with the given room ID
