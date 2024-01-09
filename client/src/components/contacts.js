@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import '../assets/css/main.css'
 import {getContacts} from "../fetcher";
 import Contact from "./contact";
+import {UserContext} from "../contexts/userContext";
+import {store} from "../utils";
 
 const Contacts = () => {
     const [contacts, setContacts] = useState({})
+    const {setContactClicked, setSecondUser} = useContext(UserContext)
     useEffect(() => {
         const getData = async () => {
             const options = {
@@ -27,7 +30,11 @@ const Contacts = () => {
                     lastMessage: c['last_message'],
                     timestamp: c.timestamp
                 }
-                return <li id={c['room_id']} key={c['room_id']} className='contact'>
+                return <li id={c['room_id']} key={c['room_id']} className='contact' onClick={() => {
+                    store('secondUser', c['contact_name'])
+                    setSecondUser(c['contact_name'])
+                    setContactClicked(true)
+                }}>
                     <Contact {...params}/>
                 </li>
             })

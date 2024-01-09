@@ -3,12 +3,19 @@ import React, {createContext, useState} from 'react';
 
 export const UserContext = createContext(undefined);
 const nameOfUser = localStorage.getItem('nameOfUser');
-const initialState = nameOfUser ? nameOfUser : ''
+const s_User = localStorage.getItem('secondUser');
+const initialUserState = nameOfUser ? nameOfUser : ''
 const UserContextProvider = ({children}) => {
-    const [user, setUser] = useState(initialState)
+    const [user, setUser] = useState(initialUserState)
+    const [secondUser, setSecondUser] = useState(s_User ? s_User : '')
+    const [contactClicked, setContactClicked] = useState(false)
     const contextValues = {
         user,
-        setUser
+        setUser,
+        secondUser,
+        setSecondUser,
+        contactClicked,
+        setContactClicked
     }
     return (
         <UserContext.Provider value={contextValues}>

@@ -4,6 +4,7 @@ import Contacts from "./contacts";
 import {useNavigate} from "react-router-dom";
 import {UserContext} from "../contexts/userContext";
 import {logOut} from "../fetcher";
+import MessagesContent from "./content";
 
 const ChatLayout = () => {
     const navigate = useNavigate()
@@ -37,8 +38,7 @@ const ChatLayout = () => {
                         <button id="settings"><i className="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
                     </div>
                 </div>
-                <div className="content">
-                </div>
+                <MessagesContent />
             </div>
         </>
     );

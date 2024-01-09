@@ -3,6 +3,7 @@ import '../assets/css/login.css'
 import {Link, useNavigate} from "react-router-dom";
 import {postSignIn} from "../fetcher";
 import {UserContext} from "../contexts/userContext";
+import {store} from "../utils";
 
 const SignInForm = () => {
     const navigate = useNavigate()
@@ -39,8 +40,8 @@ const SignInForm = () => {
         postData().then(res => {
             console.log(res)
             if (res.OK) {
-                setUser(prevState => (res.data.user.name))
-                localStorage.setItem('nameOfUser', res.data.user.name)
+                setUser(res.data.user.name)
+                store('nameOfUser', res.data.user.name)
                 navigate('/')
             }
             else
