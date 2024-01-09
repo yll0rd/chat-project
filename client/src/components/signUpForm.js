@@ -6,8 +6,8 @@ import {postSignUp} from "../fetcher";
 const SignUpForm = () => {
     const navigate = useNavigate()
     const [form, setForm] = useState({
-        F_name: '',
-        S_name: '',
+        firstname: '',
+        secondname: '',
         username: '',
         email: '',
         password: '',
@@ -22,7 +22,7 @@ const SignUpForm = () => {
             },
             credentials: 'include',  // to send cookies associated with the domain in the request.
             body: JSON.stringify({
-                name: `${capitalize(form['F_name'])} ${capitalize(form['S_name'])}`,
+                name: `${capitalize(form['firstname'])} ${capitalize(form['secondname'])}`,
                 username: form.username,
                 email: form.email,
                 password: form.password,
@@ -56,12 +56,12 @@ const SignUpForm = () => {
                     <h1>Sign Up</h1>
                     <form onSubmit={handleSubmit}>
                         <div className="txt_field">
-                            <input type="text" name="F_name" required onChange={handleChange}/>
+                            <input type="text" name="firstname" required onChange={handleChange}/>
                                 <span></span>
                                 <label>First Name *</label>
                         </div>
                         <div className="txt_field">
-                            <input type="text" name="S_name" required onChange={handleChange}/>
+                            <input type="text" name="secondname" required onChange={handleChange}/>
                                 <span></span>
                                 <label>Second Name *</label>
                         </div>
