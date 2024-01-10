@@ -11,7 +11,6 @@ import {UserContext} from "./contexts/userContext";
 
 function App() {
     const {isLoggedIn, setIsLoggedIn} = useContext(UserContext);
-    console.log(isLoggedIn)
 
     useEffect(() => {
         const checkLoginStatus = async () => {
