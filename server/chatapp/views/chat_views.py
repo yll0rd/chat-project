@@ -1,17 +1,13 @@
 import jwt
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import api_view
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from chatapp.models import Messages, Conversation
-from chatapp.utils import get_chat_room, customised_sort, login_required, get_user_from_request
+from chatapp.utils import get_chat_room, customised_sort, get_user_from_request
 
 User = get_user_model()
 
@@ -56,10 +52,8 @@ def contactsView(request):
 
 
 class FetchMessages(APIView):
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [SessionAuthentication]
-
     def get(self, request, room_id: str):
+        request, _ = get_user_from_request(request)
         # Get the conversation with the given room ID
         convo = Conversation.objects.get(room_name=room_id)
 
@@ -83,4 +77,4 @@ class FetchMessages(APIView):
             })
 
         # Return the messages as a JSON response
-        return JsonResponse(msgs)
+        return Response(msgs)

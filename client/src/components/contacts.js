@@ -3,11 +3,10 @@ import '../assets/css/main.css'
 import {getContacts} from "../fetcher";
 import Contact from "./contact";
 import {UserContext} from "../contexts/userContext";
-import {store} from "../utils";
 
 const Contacts = () => {
     const [contacts, setContacts] = useState({})
-    const {setContactClicked, setSecondUser} = useContext(UserContext)
+    const { setContactClicked } = useContext(UserContext)
     useEffect(() => {
         const getData = async () => {
             const options = {
@@ -31,15 +30,17 @@ const Contacts = () => {
                     timestamp: c.timestamp
                 }
                 return <li id={c['room_id']} key={c['room_id']} className='contact' onClick={() => {
-                    store('secondUser', c['contact_name'])
-                    setSecondUser(c['contact_name'])
-                    setContactClicked(true)
+                    setContactClicked(prevState => ({
+                        ...prevState,
+                        isContactClicked: true,
+                        roomId: c['room_id'],
+                        secondUser: c['contact_name']
+                    }))
                 }}>
                     <Contact {...params}/>
                 </li>
             })
     }
-    console.log(contacts['contacts'])
     return (
         <div id='contacts'>
             <ul>

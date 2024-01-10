@@ -48,7 +48,7 @@ class LoginView(APIView):
             else:
                 payload = {
                     'id': user.id,
-                    'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),  # Expiring 60 minutes later
+                    'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24),  # Expiring 1 day later
                     'iat': datetime.datetime.utcnow()
                 }
 
