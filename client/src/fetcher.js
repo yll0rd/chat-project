@@ -11,8 +11,10 @@ const fetcher = async (url, options = {}) => {
             if (result.message)
                 responseObject.message = result.message
         }
-        else
+        else {
+            responseObject= {data: {...result}}
             throw new Error(result.message)
+        }
 
     }
     catch (e) {
@@ -40,4 +42,8 @@ export const checkLogin = (options={}) => {
 
 export const logOut = (options={}) => {
     return fetcher('api/signout/', options)
+}
+
+export const getMessages = (roomId='', options={}) => {
+    return fetcher(`api/messages/${roomId}`, options)
 }

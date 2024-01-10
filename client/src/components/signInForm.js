@@ -12,7 +12,7 @@ const SignInForm = () => {
         password: '',
     })
     const [errors, setErrors] = useState('')
-    const { setUser } = useContext(UserContext)
+    const { setUser, setIsLoggedIn } = useContext(UserContext)
 
     const postData = async () => {
         const options = {
@@ -41,6 +41,8 @@ const SignInForm = () => {
             console.log(res)
             if (res.OK) {
                 setUser(res.data.user.name)
+                setIsLoggedIn(true)
+                store('isLoggedIn', true)
                 store('nameOfUser', res.data.user.name)
                 navigate('/')
             }

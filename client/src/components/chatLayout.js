@@ -14,6 +14,7 @@ const ChatLayout = () => {
     const handleLogOut = async () => {
         const response = await logOut({method: 'GET', credentials: 'include'});
         if (response.OK) {
+            delete localStorage.clear()
             navigate('/signin')
         }
     }

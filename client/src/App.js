@@ -4,12 +4,14 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import SignUpForm from "./components/signUpForm";
 import SignInForm from "./components/signInForm";
 import ChatLayout from "./components/chatLayout";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {checkLogin} from "./fetcher";
+import {UserContext} from "./contexts/userContext";
 
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const {isLoggedIn, setIsLoggedIn} = useContext(UserContext);
+    console.log(isLoggedIn)
 
     useEffect(() => {
         const checkLoginStatus = async () => {
@@ -27,9 +29,7 @@ function App() {
 
         checkLoginStatus()
 
-    }, []);
-
-    console.log(isLoggedIn)
+    }, [setIsLoggedIn]);
  return (
       <>
         <BrowserRouter>
