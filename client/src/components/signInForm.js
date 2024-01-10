@@ -40,10 +40,11 @@ const SignInForm = () => {
         postData().then(res => {
             console.log(res)
             if (res.OK) {
-                setUser(res.data.user.name)
+                setUser({nameOfUser: res.data.user.name, usernameOfUser: res.data.user.username})
                 setIsLoggedIn(true)
                 store('isLoggedIn', true)
                 store('nameOfUser', res.data.user.name)
+                store('usernameOfUser', res.data.user.username)
                 navigate('/')
             }
             else

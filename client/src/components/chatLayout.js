@@ -9,7 +9,7 @@ import MessagesContent from "./content";
 const ChatLayout = () => {
     const navigate = useNavigate()
     // const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const { user } = useContext(UserContext)
+    const { user, contactClicked } = useContext(UserContext)
 
     const handleLogOut = async () => {
         const response = await logOut({method: 'GET', credentials: 'include'});
@@ -26,7 +26,7 @@ const ChatLayout = () => {
                     <div id="profile">
                         <div className="wrap">
                             <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" className="online" alt="" />
-                            <p>{ user }</p>
+                            <p>{ user.nameOfUser }</p>
                         </div>
                     </div>
                     <div id="search">
@@ -39,7 +39,7 @@ const ChatLayout = () => {
                         <button id="settings"><i className="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
                     </div>
                 </div>
-                <MessagesContent />
+                {contactClicked.isContactClicked && <MessagesContent/> }
             </div>
         </>
     );
