@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#)
 [![Twitter: youmbileo](https://img.shields.io/twitter/follow/youmbileo.svg?style=social)](https://twitter.com/youmbileo)
 
-> This is a chat application project allowing users to communicate with each other in real-time, built using HTML, CSS and JavaScript (jQuery) for the frontend, Django for the backend and WebSockets.
+> This is a chat application project allowing users to communicate with each other in real-time, built using HTML, CSS and ReactJS for the frontend, Django for the backend and WebSockets.
 
 ## Install
 
@@ -22,6 +22,11 @@ npm run start
 ```sh
 npm run test
 ```
+
+## Features
+* User authentication and authorization.
+* Real-time messaging between users in a chat room.
+* User-friendly interface.
 
 ## Author
 
