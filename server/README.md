@@ -1,5 +1,5 @@
 # Chat Application project
-This folder contains the backend for [Chat Application](../client). It is built using Django REST Framework for the endpoints. 
+> This folder contains the backend for [Chat Application](../client). It is built using Django REST Framework for the endpoints. 
   
 ## Endpoints  
 The main endpoints are:  
