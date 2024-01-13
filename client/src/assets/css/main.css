@@ -547,6 +547,7 @@
 }
 #frame .content .contact-profile p {
     float: left;
+    margin: 0;
 }
 
 #timestamp {
@@ -571,6 +572,10 @@
     max-height: calc(100% - 93px);
     overflow-y: scroll;
     overflow-x: hidden;
+}
+#frame .content .messages ul {
+    padding: 0;
+    margin: 0;
 }
 @media screen and (max-width: 735px) {
     #frame .content .messages {
