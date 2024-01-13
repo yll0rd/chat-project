@@ -1,12 +1,12 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../assets/css/main.css'
 import {getContacts} from "../fetcher";
 import Contact from "./contact";
-import {UserContext} from "../contexts/userContext";
+import {useAuth} from "../hooks/userContext";
 
 const Contacts = () => {
     const [contacts, setContacts] = useState({})
-    const { setContactClicked } = useContext(UserContext)
+    const { setContactClicked } = useAuth()
     useEffect(() => {
         const getData = async () => {
             const options = {
@@ -18,7 +18,10 @@ const Contacts = () => {
             }
             return await getContacts(options)
         }
-        getData().then(res => setContacts(res.data))
+        getData().then(res => {
+            if (res.OK)
+                setContacts(res.data);
+        })
     }, [])
 
     const renderContacts = () => {

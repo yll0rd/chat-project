@@ -1,30 +1,15 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import '../assets/css/login.css'
-import {Link, useNavigate} from "react-router-dom";
-import {postSignIn} from "../fetcher";
-import {UserContext} from "../contexts/userContext";
-import {store} from "../utils";
-
+import {Link} from "react-router-dom";
+import {useAuth} from "../hooks/userContext";
 const SignInForm = () => {
-    const navigate = useNavigate()
     const [form, setForm] = useState({
         username: '',
         password: '',
     })
     const [errors, setErrors] = useState('')
-    const { setUser, setIsLoggedIn } = useContext(UserContext)
-
-    const postData = async () => {
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',  // to send cookies associated with the domain in the request.
-            body: JSON.stringify(form)
-        }
-        return await postSignIn(options)
-    }
+    const auth = useAuth()
+    const { user, loginAction } = auth
 
     const handleChange = event => {
         const {name, value} = event.target
@@ -36,22 +21,13 @@ const SignInForm = () => {
 
     const handleSubmit = event => {
         event.preventDefault()
-        // console.log(form)
-        postData().then(res => {
-            console.log(res)
-            if (res.OK) {
-                setUser({nameOfUser: res.data.user.name, usernameOfUser: res.data.user.username})
-                setIsLoggedIn(true)
-                store('isLoggedIn', true)
-                store('nameOfUser', res.data.user.name)
-                store('usernameOfUser', res.data.user.username)
-                navigate('/')
-            }
-            else
-                setErrors(res.message)
+        loginAction(form).then((res) => {
+            console.log(user);
+            if (res !== true)
+                setErrors(res);
         })
+    };
 
-    }
 
     return (
         <>

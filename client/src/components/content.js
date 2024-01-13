@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {UserContext} from "../contexts/userContext";
+import {UserContext} from "../hooks/userContext";
 import {getMessages} from "../fetcher";
 import MessageComponent from "./message";
 

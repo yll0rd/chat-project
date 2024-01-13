@@ -1,32 +1,35 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../assets/css/main.css';
 import Contacts from "./contacts";
-import {useNavigate} from "react-router-dom";
-import {UserContext} from "../contexts/userContext";
-import {logOut} from "../fetcher";
+import {useAuth} from "../hooks/userContext";
 import MessagesContent from "./content";
+import {checkLogin} from "../fetcher";
 
 const ChatLayout = () => {
-    const navigate = useNavigate()
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const { user, contactClicked } = useContext(UserContext)
+    const auth = useAuth()
+    const { logOutAction, user, contactClicked } = auth
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-    const handleLogOut = async () => {
-        const response = await logOut({method: 'GET', credentials: 'include'});
-        if (response.OK) {
-            delete localStorage.clear()
-            navigate('/signin')
-        }
-    }
+    useEffect(() => {
+        checkLogin({ method: 'GET', credentials: 'include' })
+            .then((res) => {
+                console.log(res)
+                if (!res.OK)
+                    logOutAction();
+                else
+                    setIsLoggedIn(true)
+            })
+        console.log(user)
+    }, [logOutAction, user])
 
-    return (
+    return (isLoggedIn &&
         <>
             <div id="frame">
                 <div id="sidepanel">
                     <div id="profile">
                         <div className="wrap">
                             <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" className="online" alt="" />
-                            <p>{ user.nameOfUser }</p>
+                            <p>{ user.name }</p>
                         </div>
                     </div>
                     <div id="search">
@@ -35,7 +38,7 @@ const ChatLayout = () => {
                     </div>
                     <Contacts />
                     <div id="bottom-bar">
-                        <button id="logout" onClick={handleLogOut}><span>Log Out</span></button>
+                        <button id="logout" onClick={logOutAction}><span>Log Out</span></button>
                         <button id="settings"><i className="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
                     </div>
                 </div>

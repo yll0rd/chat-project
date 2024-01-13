@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
-import {UserContext} from "../contexts/userContext";
+import {UserContext} from "../hooks/userContext";
 
 const MessageComponent = ({msg}) => {
     const { user } = useContext(UserContext)
-    const isSender = msg.sender !== user.usernameOfUser;
+    const isSender = msg.sender !== user.username;
     const messageClass = isSender ? 'sent' : 'replies';
     return (
         <>

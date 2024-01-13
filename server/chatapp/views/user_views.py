@@ -40,6 +40,7 @@ class LoginView(APIView):
         username = request.data["username"]
         password = request.data["password"]
         user = User.objects.filter(username=username).first()
+        token_expiry_time_in_seconds = 48 * 60 * 60  # Expiring 2 days later
         try:
             if user is None:
                 raise AuthenticationFailed('User not Found!')
@@ -48,18 +49,20 @@ class LoginView(APIView):
             else:
                 payload = {
                     'id': user.id,
-                    'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24),  # Expiring 1 day later
+                    'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=token_expiry_time_in_seconds),
+                    # 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60*24),  # Expiring 1 day later
                     'iat': datetime.datetime.utcnow()
                 }
 
                 token = jwt.encode(payload, 'secret', algorithm='HS256')
                 successful_response = Response()
                 # We don't want the frontend to access the cookie, so, httponly=True
-                successful_response.set_cookie(key='jwt', value=token, httponly=True, samesite='None', secure=True, max_age=24*60*60)
+                successful_response.set_cookie(key='jwt', value=token, httponly=True, samesite='None', secure=True,
+                                               max_age=token_expiry_time_in_seconds)
                 successful_response.data = {
-                    "jwt": token,
+                    "token": token,
                     'message': "Signup successful",
-                    "user": {**request.data, 'name': user.name}
+                    "user": {'username': username, 'name': user.name}
                 }
                 successful_response.status_code = status.HTTP_201_CREATED
                 return successful_response
@@ -71,9 +74,17 @@ class LoginView(APIView):
 @api_view(['GET'])
 def checkLoginView(request):
     # Get the JWT token from the request cookie
-    token = request.COOKIES.get('jwt')
-    stat = status.HTTP_200_OK if token else status.HTTP_401_UNAUTHORIZED
-    return Response({'isLoggedIn': bool(token)}, status=stat)
+    try:
+        token = request.COOKIES.get('jwt')
+        jwt.decode(token, 'secret', algorithms=['HS256'])
+        stat = status.HTTP_200_OK if token else status.HTTP_401_UNAUTHORIZED
+        return Response({'isLoggedIn': bool(token)}, status=stat)
+    except jwt.ExpiredSignatureError:
+        # Handle expired token
+        return Response({'message': 'Token expired', 'isLoggedIn': False}, status=status.HTTP_401_UNAUTHORIZED)
+    except jwt.InvalidTokenError:
+        # Handle invalid token
+        return Response({'message': 'Invalid token', 'isLoggedIn': False}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 @api_view(['GET'])

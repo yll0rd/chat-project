@@ -12,7 +12,7 @@ const fetcher = async (url, options = {}) => {
                 responseObject.message = result.message
         }
         else {
-            responseObject= {data: {...result}}
+            responseObject.data = {...result}
             throw new Error(result.message)
         }
 

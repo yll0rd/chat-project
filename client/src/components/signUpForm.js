@@ -84,7 +84,7 @@ const SignUpForm = () => {
                         <p style={{color: 'red', marginLeft: 5}} >{errors}</p>
                         <input name="submit" type="Submit" defaultValue="Sign up" />
                             <div className="signup_link">
-                                Already a Member ? <Link to='/signin'>SignIn</Link>
+                                Already a Member ? <Link to='/login'>SignIn</Link>
                             </div>
                     </form>
                 </div>
