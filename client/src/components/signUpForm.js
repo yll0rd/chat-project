@@ -44,7 +44,7 @@ const SignUpForm = () => {
         postData().then(res => {
             console.log(res);
             if (res.OK)
-                navigate('/signin')
+                navigate('/login')
             else
                 setErrors(res.message)
         })
