@@ -46,6 +46,9 @@ const MessagesContent = () => {
             return await getMessages(contactClicked.roomId, {method: 'GET', credentials: 'include'});
         }
         fetchMessages().then(res => setMessages(res.data['data']))
+        return () => {
+            setMessages([])
+        }
     }, [contactClicked.roomId])
 
     // To handle websockets
