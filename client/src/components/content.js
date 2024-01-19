@@ -59,7 +59,7 @@ const MessagesContent = () => {
             window.removeEventListener('keydown', handleKeyDown);
             ws.close()
         }
-    }, [contactClicked.roomId])
+    }, [contactClicked.roomId, setContactClicked])
 
     const handleChange = (event) => {
         setTextValue(event.target.value)
