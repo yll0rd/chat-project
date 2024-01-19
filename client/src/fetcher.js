@@ -1,9 +1,12 @@
 const BASE_URL = process.env.REACT_APP_API_URL
 console.log(BASE_URL)
 let positionOfDomainName = 4;
-if (BASE_URL.startsWith('https'))
+let socketProtocolName = 'ws';
+if (BASE_URL.startsWith('https')) {
     positionOfDomainName += 1;
-export const BASE_WS_URL = 'ws' + BASE_URL.slice(positionOfDomainName)
+    socketProtocolName = 'wss'
+}
+export const BASE_WS_URL = socketProtocolName + BASE_URL.slice(positionOfDomainName)
 const OK_CODES = [200, 201]
 
 const fetcher = async (url, options = {}) => {
