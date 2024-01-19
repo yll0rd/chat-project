@@ -664,14 +664,9 @@
     outline: none;
 }
 #frame .content .message-input .wrap .attachment {
-    position: absolute;
-    right: 60px;
-    z-index: 4;
-    margin-top: 10px;
     font-size: 1.1em;
     color: #435f7a;
     opacity: .5;
-    cursor: pointer;
 }
 @media screen and (max-width: 735px) {
     #frame .content .message-input .wrap .attachment {
@@ -682,7 +677,17 @@
 #frame .content .message-input .wrap .attachment:hover {
     opacity: 1;
 }
-#frame .content .message-input .wrap button {
+
+#frame .content .message-input .wrap button.attach {
+    width: 40px;
+    height: 40px;
+    padding: 12px 0;
+    /*color: tan;*/
+    border: none;
+    cursor: pointer;
+}
+
+#frame .content .message-input .wrap button.submit {
     float: right;
     border: none;
     width: 50px;

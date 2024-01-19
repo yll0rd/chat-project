@@ -10,6 +10,18 @@ const MessagesContent = () => {
     const [websocket, setWebsocket] = useState(null);
     const divRef = useRef(null);
 
+    const scrollToBottom = () => {
+        // Scroll to the bottom of the container
+        if (divRef.current) {
+            divRef.current.scrollTop = divRef.current.scrollHeight;
+        }
+    };
+
+    //  To scroll to the bottom when messages change
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.which === 13) {
@@ -22,7 +34,23 @@ const MessagesContent = () => {
                 setContactClicked({isContactClicked: false})
             }
         };
-        divRef.current.scrollIntoView({ behavior: 'smooth' });
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        }
+    }, [setContactClicked])
+
+    // To fetch messages
+    useEffect(() => {
+        const fetchMessages = async () => {
+            return await getMessages(contactClicked.roomId, {method: 'GET', credentials: 'include'});
+        }
+        fetchMessages().then(res => setMessages(res.data['data']))
+    }, [contactClicked.roomId])
+
+    // To handle websockets
+    useEffect(() => {
+        scrollToBottom();
         const ws = new WebSocket(BASE_WS_URL + `${contactClicked.roomId.toString()}/`)
         ws.onopen = function (e) {
             console.log('Opened successfully ', e)
@@ -35,10 +63,6 @@ const MessagesContent = () => {
         }
 
         setWebsocket(ws);
-        const fetchMessages = async () => {
-            return await getMessages(contactClicked.roomId, {method: 'GET', credentials: 'include'});
-        }
-        fetchMessages().then(res => setMessages(res.data['data']))
 
         ws.onmessage = function (e) {
             const data = JSON.parse(e.data);
@@ -52,14 +76,12 @@ const MessagesContent = () => {
             ]))
             setTextValue('')
         }
-        window.addEventListener('keydown', handleKeyDown);
 
         // Clean up the event listener when the component unmounts
         return () => {
-            window.removeEventListener('keydown', handleKeyDown);
             ws.close()
         }
-    }, [contactClicked.roomId, setContactClicked])
+    }, [contactClicked.roomId])
 
     const handleChange = (event) => {
         setTextValue(event.target.value)
@@ -97,7 +119,9 @@ const MessagesContent = () => {
                 <div className="message-input">
                     <div className="wrap">
                         <input type="text" placeholder="Write your message..." value={textValue} onChange={handleChange} />
-                        <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
+                        <button className='attach'>
+                            <i className="fa fa-paperclip attachment" aria-hidden="true"></i>
+                        </button>
                         <button className="submit" onClick={handleMessageSubmit}>
                             <i className="fa fa-paper-plane" aria-hidden="true"></i>
                         </button>
