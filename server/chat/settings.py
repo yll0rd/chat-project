@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,15 +37,15 @@ AUTH_USER_MODEL = 'chatapp.ChatUsers'
 
 INSTALLED_APPS = [
     'daphne',
-    'rest_framework',
-    'corsheaders',
+    'chatapp.apps.ChatappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'chatapp.apps.ChatappConfig'
+    'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
