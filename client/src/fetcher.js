@@ -1,4 +1,5 @@
 const BASE_URL = 'http://127.0.0.1:8000/'
+export const BASE_WS_URL = 'ws' + BASE_URL.slice(4)
 const OK_CODES = [200, 201]
 
 const fetcher = async (url, options = {}) => {
