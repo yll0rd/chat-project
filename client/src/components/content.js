@@ -70,21 +70,18 @@ const MessagesContent = () => {
         ws.onmessage = function (e) {
             const data = JSON.parse(e.data);
             console.log(data)
-            setMessages(prevState => ([
-                ...prevState,
-                {
-                    content: data['message'],
-                    sender: data['sender_username']
-                }
-            ]))
-            setTextValue('')
+            let content = data['message']
+            let sender = data['sender_username']
+            setMessages(prevState => ([ ...prevState, { content, sender } ]))
+            if (sender === user.username)
+                setTextValue('')
         }
 
         // Clean up the event listener when the component unmounts
         return () => {
             ws.close()
         }
-    }, [contactClicked.roomId])
+    }, [contactClicked.roomId, user.username])
 
     const handleChange = (event) => {
         setTextValue(event.target.value)
