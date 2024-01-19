@@ -2,11 +2,9 @@ import React, {useEffect, useState} from 'react';
 import '../assets/css/main.css'
 import {getContacts} from "../fetcher";
 import Contact from "./contact";
-import {useAuth} from "../hooks/userContext";
 
 const Contacts = () => {
     const [contacts, setContacts] = useState({})
-    const { setContactClicked } = useAuth()
     useEffect(() => {
         const getData = async () => {
             const options = {
@@ -30,18 +28,10 @@ const Contacts = () => {
                 let params = {
                     contactName: c['contact_name'],
                     lastMessage: c['last_message'],
-                    timestamp: c.timestamp
+                    timestamp: c.timestamp,
+                    id: c.room_id
                 }
-                return <li id={c['room_id']} key={c['room_id']} className='contact' onClick={() => {
-                    setContactClicked(prevState => ({
-                        ...prevState,
-                        isContactClicked: true,
-                        roomId: c['room_id'],
-                        secondUser: c['contact_name']
-                    }))
-                }}>
-                    <Contact {...params}/>
-                </li>
+                return <Contact {...params} key={c['room_id']}/>
             })
     }
     return (
