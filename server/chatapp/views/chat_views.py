@@ -37,6 +37,7 @@ def contactsView(request):
     for contact in contacts:
         last_message = Messages.objects.filter(conversation=get_chat_room(request.user, contact[0])).last()
         contact_list.append({
+            "username": contact[0].username,
             "contact_name": contact[0].name,
             "room_id": get_chat_room(request.user, contact[0]).room_name,
         })
@@ -46,9 +47,9 @@ def contactsView(request):
         else:
             contact_list[-1]["last_message"] = 'empty chat'
             contact_list[-1]["timestamp"] = ''
-    context = {'contacts': contact_list}
+    # context = {'contacts': contact_list}
     # return render(request, 'chatapp/index.html', context=context, status=status.HTTP_200_OK)
-    return Response(context)
+    return Response(contact_list)
 
 
 class FetchMessages(APIView):
