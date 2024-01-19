@@ -4,7 +4,7 @@ import {BASE_WS_URL, getMessages} from "../fetcher";
 import MessageComponent from "./message";
 
 const MessagesContent = () => {
-    const { contactClicked, user, setContactClicked } = useAuth()
+    const { contactClicked, user, setContactClicked, contacts, setContacts } = useAuth()
     const [messages, setMessages] = useState([]);
     const [textValue, setTextValue] = useState("");
     const [websocket, setWebsocket] = useState(null);
@@ -53,7 +53,6 @@ const MessagesContent = () => {
 
     // To handle websockets
     useEffect(() => {
-        scrollToBottom();
         const ws = new WebSocket(BASE_WS_URL + `${contactClicked.roomId.toString()}/`)
         ws.onopen = function (e) {
             console.log('Opened successfully ', e)
@@ -69,19 +68,36 @@ const MessagesContent = () => {
 
         ws.onmessage = function (e) {
             const data = JSON.parse(e.data);
-            console.log(data)
             let content = data['message']
             let sender = data['sender_username']
             setMessages(prevState => ([ ...prevState, { content, sender } ]))
+
             if (sender === user.username)
                 setTextValue('')
+
+            let i = 0;
+            let resultContacts = []
+            for (const contact of contacts){
+                let prev = [...contacts]
+                if (contact.username === contactClicked.username){
+                    let con = prev.splice(i, 1);
+                    con['last_message'] = content;
+                    console.log(con);
+                    console.log(prev)
+                    console.log([...con, ...prev])
+                    resultContacts = [...con, ...prev]
+                    break;
+                }
+                i += 1;
+            }
+            setContacts(resultContacts)
         }
 
         // Clean up the event listener when the component unmounts
         return () => {
             ws.close()
         }
-    }, [contactClicked.roomId, user.username])
+    }, [contactClicked.roomId, contactClicked.username, contacts, setContacts, user.username])
 
     const handleChange = (event) => {
         setTextValue(event.target.value)
@@ -109,7 +125,7 @@ const MessagesContent = () => {
             <div className="content">
                 <div className="contact-profile">
                     <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-                    <p>{contactClicked.secondUser}</p>
+                    <p>{contactClicked.name}</p>
                 </div>
                 <div className="messages" ref={divRef}>
                     <ul>

@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import '../assets/css/main.css'
 import {getContacts} from "../fetcher";
 import Contact from "./contact";
+import {useAuth} from "../hooks/userContext";
 
 const Contacts = () => {
-    const [contacts, setContacts] = useState({})
+    const {contacts, setContacts} = useAuth()
     useEffect(() => {
         const getData = async () => {
             const options = {
@@ -20,13 +21,15 @@ const Contacts = () => {
             if (res.OK)
                 setContacts(res.data);
         })
-    }, [])
+    }, [setContacts])
 
     const renderContacts = () => {
-        if (contacts['contacts'])
-            return contacts['contacts'].map(c => {
+        console.log(contacts)
+        if (contacts)
+            return contacts.map(c => {
                 let params = {
                     contactName: c['contact_name'],
+                    username: c['username'],
                     lastMessage: c['last_message'],
                     timestamp: c.timestamp,
                     id: c.room_id

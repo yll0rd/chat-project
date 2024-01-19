@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import '../assets/css/main.css'
 import {useAuth} from "../hooks/userContext";
 
-const Contact = ({contactName, lastMessage, timestamp, id}) => {
+const Contact = ({contactName, lastMessage, timestamp, id, username}) => {
     const { contactClicked,  setContactClicked } = useAuth();
     const [className, setClassName] = useState('contact');
 
@@ -20,7 +20,8 @@ const Contact = ({contactName, lastMessage, timestamp, id}) => {
             ...prevState,
             isContactClicked: true,
             roomId: id,
-            secondUser: contactName
+            name: contactName,
+            username
         }));
     }
 

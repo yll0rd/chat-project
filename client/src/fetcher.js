@@ -15,7 +15,7 @@ const fetcher = async (url, options = {}) => {
         const response = await fetch(BASE_URL + url, options)
         const result = await response.json()
         if (OK_CODES.includes(response.status)) {
-            responseObject= {data: {...result}, OK: true}
+            responseObject= {data: result, OK: true}
             if (result.message)
                 responseObject.message = result.message
         }

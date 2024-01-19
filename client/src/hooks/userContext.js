@@ -12,11 +12,13 @@ const initialUserState = nameOfUser && usernameOfUser ? {'name': nameOfUser, 'us
 const UserContextProvider = ({children}) => {
     const [user, setUser] = useState(initialUserState)
     const [token, setToken] = useState(localStorage.getItem("jwt"));
+    const [contacts, setContacts] = useState([])
     const navigate = useNavigate();
     const [contactClicked, setContactClicked] = useState({
         isContactClicked: false,
         roomId: '',
-        secondUser: ''
+        name: '',
+        username: ''
     })
 
     const loginAction = async (data) => {
@@ -59,6 +61,8 @@ const UserContextProvider = ({children}) => {
         token,
         contactClicked,
         setContactClicked,
+        contacts,
+        setContacts,
         loginAction,
         logOutAction
     }
