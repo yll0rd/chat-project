@@ -427,7 +427,7 @@
 }
 @media screen and (max-width: 735px) {
     #frame #sidepanel #contacts ul li.contact .wrap img {
-        margin-right: 0px;
+        margin-right: 0;
     }
 }
 #frame #sidepanel #contacts ul li.contact .wrap .meta {
@@ -610,6 +610,11 @@
     float: right;
     margin: 6px 0 0 8px;
 }
+
+#frame .content .messages ul li p {
+    margin: 0;
+}
+
 #frame .content .messages ul li.replies p {
     background: #435f7a;
     color: #f5f5f5;
