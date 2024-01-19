@@ -1,4 +1,5 @@
-const BASE_URL = 'http://127.0.0.1:8000/'
+const BASE_URL = process.env.REACT_APP_API_URL
+console.log(BASE_URL)
 export const BASE_WS_URL = 'ws' + BASE_URL.slice(4)
 const OK_CODES = [200, 201]
 
