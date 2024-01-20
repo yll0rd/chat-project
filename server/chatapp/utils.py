@@ -1,4 +1,5 @@
 """Useful functions"""
+from datetime import datetime
 from functools import wraps
 
 import jwt
@@ -7,11 +8,12 @@ from django.http import HttpResponse
 from rest_framework import status
 
 from chatapp.models import Conversation
+from typing import List, Tuple, Any
 
 User = get_user_model()
 
 
-def get_chat_room(user1, user2):
+def get_chat_room(user1: User, user2: User) -> Any | None:
     """Gets the chat room of the two users passed"""
     for chat_room in Conversation.objects.all():
         if user1 in chat_room.users.all() and user2 in chat_room.users.all():
@@ -19,7 +21,7 @@ def get_chat_room(user1, user2):
     return None
 
 
-def customised_sort(users_with_timestamps: list):
+def customised_sort(users_with_timestamps: List[Tuple[User, datetime | None]]) -> List[Tuple[User, datetime | None]]:
     """Sorts the list passed in terms of timestamps"""
     new_list = list()
     # Adding users with messages in new list.
@@ -67,7 +69,7 @@ def login_required(view_func):
     return wrapper
 
 
-def get_user_from_request(request):
+def get_user_from_request(request: Any) -> Tuple[Any, Any]:
     # Get the JWT token from the request cookie
     token = request.COOKIES.get('jwt')
     # Verify and decode the JWT token
