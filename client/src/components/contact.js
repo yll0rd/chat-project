@@ -16,6 +16,8 @@ const Contact = ({contactName, lastMessage, timestamp, id, username}) => {
     }, [contactClicked, id])
 
     const handleContactClicked = () => {
+        if ((contactClicked.isContactClicked) && (contactClicked.roomId === id))
+            return
         setContactClicked(prevState => ({
             ...prevState,
             isContactClicked: true,
