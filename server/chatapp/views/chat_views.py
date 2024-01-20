@@ -43,13 +43,12 @@ def contactsView(request):
         })
         if last_message:
             contact_list[-1]["last_message"] = last_message.content
-            contact_list[-1]["timestamp"] = contact[1].time()
+            contact_list[-1]["timestamp"] = contact[1].strftime("%I:%M %p")
         else:
             contact_list[-1]["last_message"] = 'empty chat'
             contact_list[-1]["timestamp"] = ''
-    # context = {'contacts': contact_list}
-    # return render(request, 'chatapp/index.html', context=context, status=status.HTTP_200_OK)
-    return Response(contact_list)
+
+    return Response(contact_list, status=status.HTTP_200_OK)
 
 
 class FetchMessages(APIView):
