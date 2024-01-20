@@ -66,38 +66,46 @@ const MessagesContent = () => {
 
         setWebsocket(ws);
 
-        ws.onmessage = function (e) {
-            const data = JSON.parse(e.data);
-            let content = data['message']
-            let sender = data['sender_username']
-            setMessages(prevState => ([ ...prevState, { content, sender } ]))
-
-            if (sender === user.username)
-                setTextValue('')
-
-            let i = 0;
-            let resultContacts = []
-            for (const contact of contacts){
-                let prev = [...contacts]
-                if (contact.username === contactClicked.username){
-                    let con = prev.splice(i, 1);
-                    con['last_message'] = content;
-                    console.log(con);
-                    console.log(prev)
-                    console.log([...con, ...prev])
-                    resultContacts = [...con, ...prev]
-                    break;
-                }
-                i += 1;
-            }
-            setContacts(resultContacts)
-        }
-
         // Clean up the event listener when the component unmounts
         return () => {
             ws.close()
         }
-    }, [contactClicked.roomId, contactClicked.username, contacts, setContacts, user.username])
+    }, [contactClicked.roomId])
+
+
+    useEffect(() => {
+        if (websocket) {
+            websocket.onmessage = function (e) {
+                const data = JSON.parse(e.data);
+                let content = data['message']
+                let sender = data['sender_username']
+                let timestamp = data['timestamp']
+                setMessages(prevState => ([...prevState, {content, sender, timestamp}]))
+
+                if (sender === user.username)
+                    setTextValue('')
+
+                let i = 0;
+                let resultContacts = []
+                for (const contact of contacts) {
+                    let prev = [...contacts]
+                    if (contact.username === contactClicked.username) {
+                        let con = prev.splice(i, 1);
+                        con[0]['last_message'] = content;
+                        con[0]['timestamp'] = timestamp;
+                        console.log(con);
+                        // console.log(prev)
+                        // console.log([...con, ...prev])
+                        resultContacts = [...con, ...prev]
+                        break;
+                    }
+                    i += 1;
+                }
+                setContacts(resultContacts)
+            }
+        }
+
+    }, [contactClicked.username, contacts, setContacts, user.username, websocket])
 
     const handleChange = (event) => {
         setTextValue(event.target.value)
