@@ -31,6 +31,9 @@ DEBUG = os.getenv("DEBUG")
 
 # ALLOWED_HOSTS = ['yll-chatapp.onrender.com', '127.0.0.1']
 ALLOWED_HOSTS = ['*']
+CORS_ALLOW_ALL_HEADERS = True
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 AUTH_USER_MODEL = 'chatapp.ChatUsers'
 
@@ -38,8 +41,7 @@ AUTH_USER_MODEL = 'chatapp.ChatUsers'
 
 INSTALLED_APPS = [
     'daphne',
-    'channels',
-    'channels_redis',
+    'asgiref',
     'chatapp.apps.ChatappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -83,20 +85,32 @@ TEMPLATES = [
 # WSGI_APPLICATION = 'chat.wsgi.application'
 ASGI_APPLICATION = 'chat.asgi.application'
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
-}
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels.layers.InMemoryChannelLayer"
+#     }
+# }
 
 # CHANNEL_LAYERS = {
 #     "default": {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": [(os.getenv('REDIS_URL', 'redis://localhost:6379'))],
+#         "BACKEND": "asgi_redis.RedisChannelLayer",
+# "ROUTING": "chatapp.routing.websocket_urlpatterns",
+# "CONFIG": {
+#     "hosts": [('localhost', 6379)],
+# "hosts": [("redis://:mypassword@127.0.0.1:6379/0")],
 #         },
 #     },
 # }
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(os.getenv('REDIS_URL'))],
+            # "hosts": [(os.getenv('REDIS_URL', 'redis://localhost:6379'))],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
