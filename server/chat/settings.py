@@ -29,6 +29,7 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG")
 
+# ALLOWED_HOSTS = ['yll-chatapp.onrender.com', '127.0.0.1']
 ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'chatapp.ChatUsers'
@@ -37,6 +38,8 @@ AUTH_USER_MODEL = 'chatapp.ChatUsers'
 
 INSTALLED_APPS = [
     'daphne',
+    'channels',
+    'channels_redis',
     'chatapp.apps.ChatappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,10 +83,19 @@ TEMPLATES = [
 # WSGI_APPLICATION = 'chat.wsgi.application'
 ASGI_APPLICATION = 'chat.asgi.application'
 
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels.layers.InMemoryChannelLayer"
+#     }
+# }
+
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [(os.getenv('REDIS_URL', 'redis://localhost:6379'))],
+        },
+    },
 }
 
 # Database
@@ -111,7 +123,6 @@ else:
             'PORT': os.getenv("DB_PORT"),
         }
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
