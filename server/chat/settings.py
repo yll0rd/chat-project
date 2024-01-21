@@ -35,6 +35,10 @@ CORS_ALLOW_ALL_HEADERS = True
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+CORS_ALLOWED_ORIGINS = [
+    "https://api-yll-chatapp.onrender.com",
+]
+
 AUTH_USER_MODEL = 'chatapp.ChatUsers'
 
 # Application definition
