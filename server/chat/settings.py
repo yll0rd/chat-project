@@ -33,11 +33,13 @@ DEBUG = os.getenv("DEBUG", False)
 ALLOWED_HOSTS = ['*']
 CORS_ALLOW_ALL_HEADERS = True
 
-CORS_ORIGIN_ALLOW_ALL = True
-
-CORS_ALLOWED_ORIGINS = [
-    "https://api-yll-chatapp.onrender.com",
-]
+if os.getenv('ON_PRODUCTION') == 'True':
+    CORS_ALLOWED_ORIGINS = [
+        "https://api-yll-chatapp.onrender.com",
+        "https://yll-chatapp.onrender.com",
+    ]
+else:
+    CORS_ORIGIN_ALLOW_ALL = True
 
 AUTH_USER_MODEL = 'chatapp.ChatUsers'
 
