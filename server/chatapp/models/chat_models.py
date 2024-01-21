@@ -16,6 +16,10 @@ class Conversation(models.Model):
             room_users += '-' + str(user)
         return f"{room_users[1:]}"
 
+    class Meta:
+        verbose_name = 'Conversation'
+        verbose_name_plural = 'Conversations'
+
 
 class Messages(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -25,3 +29,7 @@ class Messages(models.Model):
 
     def __str__(self):
         return f'{self.conversation}: {self.content}'
+
+    class Meta:
+        verbose_name = 'Message'
+        verbose_name_plural = 'Messages'
