@@ -1,4 +1,5 @@
 """Useful functions"""
+import uuid
 from datetime import datetime
 from functools import wraps
 
@@ -13,12 +14,24 @@ from typing import List, Tuple, Any
 User = get_user_model()
 
 
-def get_chat_room(user1: User, user2: User) -> Any | None:
+def is_database_empty(YourModel: Any):
+    return YourModel.objects.count() == 0
+
+
+def get_chat_room(user1: User, user2: User) -> Any:
     """Gets the chat room of the two users passed"""
-    for chat_room in Conversation.objects.all():
-        if user1 in chat_room.users.all() and user2 in chat_room.users.all():
-            return chat_room
-    return None
+    chat_room = None
+    for room in Conversation.objects.all():
+        if user1 in room.users.all() and user2 in room.users.all():
+            chat_room = room
+            break
+
+    if chat_room is None:
+        chat_room = Conversation.objects.create(room_name=f"Room_{str(uuid.uuid4())[:8]}")
+        chat_room.users.add(user1, user2)
+        chat_room.save()
+
+    return chat_room
 
 
 def customised_sort(users_with_timestamps: List[Tuple[User, datetime | None]]) -> List[Tuple[User, datetime | None]]:
