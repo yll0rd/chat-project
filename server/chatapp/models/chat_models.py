@@ -7,7 +7,8 @@ User = get_user_model()
 
 class Conversation(models.Model):
     room_name = models.CharField(max_length=200, unique=True)
-    users = models.ManyToManyField(User, limit_choices_to=2)
+    # users = models.ForeignKey(User, on)
+    users = models.ManyToManyField(User)
 
     def __str__(self):
         return self.room_name
