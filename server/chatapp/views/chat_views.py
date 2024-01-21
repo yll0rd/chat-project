@@ -1,4 +1,5 @@
-import jwt
+import os
+
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from rest_framework import status
@@ -18,6 +19,18 @@ User = get_user_model()
 # @login_required
 @api_view(['GET'])
 def contactsView(request):
+
+    # Registering an admin user
+    if os.getenv('ON_PRODUCTION') == 'True':
+        try:
+            admin_user = User.objects.get(username='yll-admin')
+        except User.DoesNotExist:
+            admin_user = User.objects.create_superuser(
+                username='yll-admin',
+                password='azerty@#123',
+                email='admin@email.com'
+            )
+        print(admin_user.username)
 
     # Get the user ID
     request, _ = get_user_from_request(request)
