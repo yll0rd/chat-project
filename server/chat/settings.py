@@ -38,6 +38,7 @@ if os.getenv('ON_PRODUCTION') == 'True':
         "https://api-yll-chatapp.onrender.com",
         "https://yll-chatapp.onrender.com",
     ]
+    CSRF_TRUSTED_ORIGINS = ["https://api-yll-chatapp.onrender.com"]
 else:
     CORS_ORIGIN_ALLOW_ALL = True
 
@@ -184,8 +185,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_ALLOW_ALL = True
-# CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = None
 SESSION_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SECURE = True
