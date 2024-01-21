@@ -11,7 +11,10 @@ class Conversation(models.Model):
     users = models.ManyToManyField(User)
 
     def __str__(self):
-        return self.room_name
+        room_users = ''
+        for user in self.users.all():
+            room_users += '-' + str(user)
+        return f"{room_users[1:]}"
 
 
 class Messages(models.Model):
@@ -21,4 +24,4 @@ class Messages(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.content
+        return f'{self.conversation}: {self.content}'
