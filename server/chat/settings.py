@@ -38,7 +38,10 @@ if os.getenv('ON_PRODUCTION') == 'True':
         "https://api-yll-chatapp.onrender.com",
         "https://yll-chatapp.onrender.com",
     ]
-    CSRF_TRUSTED_ORIGINS = ["https://api-yll-chatapp.onrender.com"]
+    CSRF_TRUSTED_ORIGINS = [
+        "https://api-yll-chatapp.onrender.com",
+        "https://yll-chatapp.onrender.com"
+    ]
 else:
     CORS_ORIGIN_ALLOW_ALL = True
 
