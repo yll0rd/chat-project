@@ -8,15 +8,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from chatapp.models import Messages, Conversation
-from chatapp.utils import get_chat_room, customised_sort, get_user_from_request
+from chatapp.utils import get_chat_room, customised_sort, get_user_from_request, strip_time_stamp
 
 User = get_user_model()
 
 
-# Create your views here.
+# Create your views here
 
-# @login_required(login_url='/signin')
-# @login_required
 @api_view(['GET'])
 def contactsView(request):
 
@@ -56,7 +54,7 @@ def contactsView(request):
         })
         if last_message:
             contact_list[-1]["last_message"] = last_message.content
-            contact_list[-1]["timestamp"] = contact[1].strftime("%I:%M %p")
+            contact_list[-1]["timestamp"] = strip_time_stamp(contact[1])
         else:
             contact_list[-1]["last_message"] = 'empty chat'
             contact_list[-1]["timestamp"] = ''

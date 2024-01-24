@@ -40,7 +40,7 @@ const Contact = ({contactName, lastMessage, timestamp, id, username}) => {
                         <p className="preview">
                             <span>
                                 { lastMessage }
-                                <span id="timestamp" style={{marginRight: 45}}>
+                                <span id="timestamp" >
                                     { timestamp }
                                 </span>
                             </span>

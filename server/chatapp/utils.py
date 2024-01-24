@@ -18,6 +18,18 @@ def is_database_empty(YourModel: Any):
     return YourModel.objects.count() == 0
 
 
+def strip_time_stamp(date: datetime) -> datetime | str:
+    """Gets the appropriate timestamp"""
+    today = datetime.today()
+    answer = date.strftime('%d/%m/%Y')
+    if date.year == today.year and date.month == today.month:
+        if today.day == date.day:
+            answer = date.strftime("%I:%M %p")
+        elif today.day > date.day and today.day - date.day == 1:
+            answer = 'Yesterday'
+    return answer
+
+
 def get_chat_room(user1: User, user2: User) -> Any:
     """Gets the chat room of the two users passed"""
     chat_room = None

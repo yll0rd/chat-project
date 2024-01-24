@@ -5,6 +5,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth import get_user_model
 
 from chatapp.models import Messages, Conversation
+from chatapp.utils import strip_time_stamp
 
 Users = get_user_model()
 
@@ -38,7 +39,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 "type": "sendMessage",
                 "message": message.content,
                 "sender_username": message.user.username,
-                "timestamp": message.timestamp.strftime("%I:%M %p"),
+                "timestamp": strip_time_stamp(message.timestamp),
                 "room_name": room_id
             }
         )
