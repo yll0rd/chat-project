@@ -1,12 +1,9 @@
 import datetime
 import jwt
-from django.contrib.auth import get_user_model, logout
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.contrib.auth import get_user_model
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import api_view
-from rest_framework.exceptions import AuthenticationFailed
+from rest_framework.exceptions import AuthenticationFailed, ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -29,8 +26,11 @@ class RegisterView(APIView):
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
-        except Exception as e:
-            return Response({'Error': f'{e}'}, status=status.HTTP_400_BAD_REQUEST)
+        except ValidationError:
+            return Response(
+                {'message': f" Username {request.data['username']} already exists."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class LoginView(APIView):
