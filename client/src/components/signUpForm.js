@@ -47,6 +47,11 @@ const SignUpForm = () => {
                 navigate('/login')
             else
                 setErrors(res.message)
+            setForm(prev => ({
+                ...prev,
+                password: '',
+                username: ''
+            }))
         })
     }
     return (
@@ -56,27 +61,27 @@ const SignUpForm = () => {
                     <h1>Sign Up</h1>
                     <form onSubmit={handleSubmit}>
                         <div className="txt_field">
-                            <input type="text" name="firstname" required onChange={handleChange}/>
+                            <input type="text" name="firstname" value={form.firstname} required onChange={handleChange}/>
                                 <span></span>
                                 <label>First Name *</label>
                         </div>
                         <div className="txt_field">
-                            <input type="text" name="secondname" required onChange={handleChange}/>
+                            <input type="text" name="secondname" value={form.secondname} required onChange={handleChange}/>
                                 <span></span>
                                 <label>Second Name *</label>
                         </div>
                         <div className="txt_field">
-                            <input type="text" name="username" required onChange={handleChange}/>
+                            <input type="text" name="username" value={form.username} required onChange={handleChange}/>
                                 <span></span>
                                 <label>Username *</label>
                         </div>
                         <div className="txt_field">
-                            <input type="email" name="email" required onChange={handleChange}/>
+                            <input type="email" name="email" value={form.email} required onChange={handleChange}/>
                                 <span></span>
                                 <label>Email *</label>
                         </div>
                         <div className="txt_field">
-                            <input type="password" name="password" required onChange={handleChange}/>
+                            <input type="password" name="password" value={form.password} required onChange={handleChange}/>
                                 <span></span>
                                 <label>Password *</label>
                         </div>
