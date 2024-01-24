@@ -14,12 +14,13 @@ const UserContextProvider = ({children}) => {
     const [token, setToken] = useState(localStorage.getItem("jwt"));
     const [contacts, setContacts] = useState([])
     const navigate = useNavigate();
-    const [contactClicked, setContactClicked] = useState({
+    const contactClickedInitialState = {
         isContactClicked: false,
         roomId: '',
         name: '',
         username: ''
-    })
+    }
+    const [contactClicked, setContactClicked] = useState(contactClickedInitialState)
 
     const loginAction = async (data) => {
         const options = {
@@ -49,7 +50,8 @@ const UserContextProvider = ({children}) => {
         if (res.OK) {
             setUser(null);
             setToken("");
-            localStorage.clear()
+            setContactClicked(contactClickedInitialState);
+            localStorage.clear();
             navigate("/")
         }
         else
