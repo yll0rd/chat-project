@@ -3,10 +3,11 @@ import '../assets/css/login.css'
 import {Link} from "react-router-dom";
 import {useAuth} from "../hooks/userContext";
 const SignInForm = () => {
-    const [form, setForm] = useState({
+    const formInitialState = {
         username: '',
         password: '',
-    })
+    }
+    const [form, setForm] = useState(formInitialState)
     const [errors, setErrors] = useState('')
     const auth = useAuth()
     const { user, loginAction } = auth
@@ -25,6 +26,7 @@ const SignInForm = () => {
             console.log(user);
             if (res !== true)
                 setErrors(res);
+            setForm(formInitialState)
         })
     };
 
@@ -36,12 +38,12 @@ const SignInForm = () => {
                     <h1>Sign In</h1>
                     <form onSubmit={handleSubmit}>
                         <div className="txt_field">
-                            <input type="text" name="username" required onChange={handleChange}/>
+                            <input type="text" name="username" value={form.username} required onChange={handleChange}/>
                                 <span></span>
                                 <label>Username</label>
                         </div>
                         <div className="txt_field">
-                            <input type="password" name="password" required onChange={handleChange} />
+                            <input type="password" name="password" value={form.password} required onChange={handleChange} />
                                 <span></span>
                                 <label>Password</label>
                         </div>
