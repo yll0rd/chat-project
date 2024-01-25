@@ -10,6 +10,7 @@ const usernameOfUser = localStorage.getItem('username');
 const initialUserState = nameOfUser && usernameOfUser ? {'name': nameOfUser, 'username': usernameOfUser} : {}
 
 const UserContextProvider = ({children}) => {
+    const [generalWebSocket, setGeneralWebSocket] = useState(null)
     const [user, setUser] = useState(initialUserState)
     const [token, setToken] = useState(localStorage.getItem("jwt"));
     const [contacts, setContacts] = useState([])
@@ -65,6 +66,8 @@ const UserContextProvider = ({children}) => {
         setContactClicked,
         contacts,
         setContacts,
+        generalWebSocket,
+        setGeneralWebSocket,
         loginAction,
         logOutAction
     }

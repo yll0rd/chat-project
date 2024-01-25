@@ -4,7 +4,7 @@ import {BASE_WS_URL, getMessages} from "../fetcher";
 import MessageComponent from "./message";
 
 const MessagesContent = () => {
-    const { contactClicked, user, setContactClicked, contacts, setContacts } = useAuth()
+    const { contactClicked, user, setContactClicked, generalWebSocket } = useAuth()
     const [messages, setMessages] = useState([]);
     const [textValue, setTextValue] = useState("");
     const [websocket, setWebsocket] = useState(null);
@@ -55,13 +55,11 @@ const MessagesContent = () => {
     useEffect(() => {
         const ws = new WebSocket(BASE_WS_URL + `${contactClicked.roomId.toString()}/`)
         ws.onopen = function (e) {
-            console.log('Opened successfully ', e)
-            console.log("The connection was setup successfully !");
+            console.log("The chat socket was opened successfully !", e);
         }
 
         ws.onclose = function (e) {
-            console.log("Error: ", e)
-            console.log("Chat socket closed unexpectedly")
+            console.log("Chat socket closed unexpectedly", e)
         }
 
         setWebsocket(ws);
@@ -84,29 +82,10 @@ const MessagesContent = () => {
 
                 if (sender === user.username)
                     setTextValue('')
-
-                let i = 0;
-                let resultContacts = []
-                for (const contact of contacts) {
-                    let prev = [...contacts]
-                    if (contact.username === contactClicked.username) {
-                        let con = prev.splice(i, 1);
-                        con[0]['last_message'] = content;
-                        con[0]['last_message_sender'] = sender;
-                        con[0]['timestamp'] = timestamp;
-                        console.log(con);
-                        // console.log(prev)
-                        // console.log([...con, ...prev])
-                        resultContacts = [...con, ...prev]
-                        break;
-                    }
-                    i += 1;
-                }
-                setContacts(resultContacts)
             }
         }
 
-    }, [contactClicked.username, contacts, setContacts, user.username, websocket])
+    }, [user.username, websocket])
 
     const handleChange = (event) => {
         setTextValue(event.target.value)
@@ -118,6 +97,12 @@ const MessagesContent = () => {
             "message": textValue,
             "room_id": contactClicked.roomId,
             "sender_username": user.username
+        }));
+        generalWebSocket.send(JSON.stringify({
+            "message": textValue,
+            "room_id": contactClicked.roomId,
+            "sender_username": user.username,
+            "timestamp": new Date().toISOString()
         }));
     }
 
