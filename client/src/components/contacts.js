@@ -31,6 +31,7 @@ const Contacts = () => {
                     contactName: c['contact_name'],
                     username: c['username'],
                     lastMessage: c['last_message'],
+                    lastMessageSender: c['last_message_sender'],
                     timestamp: c.timestamp,
                     id: c.room_id
                 }

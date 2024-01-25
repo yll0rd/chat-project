@@ -92,6 +92,7 @@ const MessagesContent = () => {
                     if (contact.username === contactClicked.username) {
                         let con = prev.splice(i, 1);
                         con[0]['last_message'] = content;
+                        con[0]['last_message_sender'] = sender;
                         con[0]['timestamp'] = timestamp;
                         console.log(con);
                         // console.log(prev)

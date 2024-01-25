@@ -2,9 +2,11 @@ import React, {useEffect, useState} from 'react';
 import '../assets/css/main.css'
 import {useAuth} from "../hooks/userContext";
 
-const Contact = ({contactName, lastMessage, timestamp, id, username}) => {
-    const { contactClicked,  setContactClicked } = useAuth();
+const Contact = ({contactName, lastMessage, lastMessageSender, timestamp, id, username}) => {
+    const { contactClicked,  setContactClicked, user } = useAuth();
     const [className, setClassName] = useState('contact');
+    const isSender = lastMessageSender !== user.username;
+    const previewText = (isSender ? '' : 'You: ') + lastMessage;
 
 
     useEffect(() => {
@@ -39,7 +41,7 @@ const Contact = ({contactName, lastMessage, timestamp, id, username}) => {
                         </p>
                         <p className="preview">
                             <span>
-                                { lastMessage }
+                                { previewText }
                                 <span id="timestamp" >
                                     { timestamp }
                                 </span>

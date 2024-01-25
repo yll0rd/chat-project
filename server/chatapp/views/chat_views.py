@@ -54,6 +54,7 @@ def contactsView(request):
         })
         if last_message:
             contact_list[-1]["last_message"] = last_message.content
+            contact_list[-1]["last_message_sender"] = last_message.user.username
             contact_list[-1]["timestamp"] = strip_time_stamp(contact[1])
         else:
             contact_list[-1]["last_message"] = 'empty chat'
