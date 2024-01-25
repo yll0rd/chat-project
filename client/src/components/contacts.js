@@ -24,7 +24,6 @@ const Contacts = () => {
     }, [setContacts])
 
     const renderContacts = () => {
-        console.log(contacts)
         if (contacts)
             return contacts.map(c => {
                 let params = {
