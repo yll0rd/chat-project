@@ -18,9 +18,9 @@
 
 👤 **Youmbi Leo**
 
-* Twitter: [@youmbileo](https://twitter.com/youmbileo)
-* Github: [@Leo-Youmbi](https://github.com/Leo-Youmbi)
-* LinkedIn: [@Youmbi Lorsdon](https://linkedin.com/in/youmbi-lorsdon)
+* Twitter: [@yll0rd](https://twitter.com/yll0rd)
+* Github: [@yll0rd](https://github.com/yll0rd)
+* LinkedIn: [@yll0rd](https://linkedin.com/in/yll0rd)
 
 ## Show your support
 
