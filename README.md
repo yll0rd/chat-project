@@ -1,7 +1,7 @@
 # Welcome to chatapp 👋
 [![Version](https://img.shields.io/npm/v/chatapp.svg)](https://www.npmjs.com/package/chatapp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#)
-[![Twitter: youmbileo](https://img.shields.io/twitter/follow/youmbileo.svg?style=social)](https://twitter.com/youmbileo)
+[![Twitter: yll0rd](https://img.shields.io/twitter/follow/yll0rd.svg?style=social)](https://twitter.com/yll0rd)
 
 > This is a chat application project allowing users to communicate with each other in real-time, built using HTML, CSS and ReactJS for the frontend, Django for the backend and WebSockets.
 
