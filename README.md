@@ -1,5 +1,4 @@
 # Welcome to chatapp 👋
-[![Version](https://img.shields.io/npm/v/chatapp.svg)](https://www.npmjs.com/package/chatapp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#)
 [![Twitter: yll0rd](https://img.shields.io/twitter/follow/yll0rd.svg?style=social)](https://twitter.com/yll0rd)
 
